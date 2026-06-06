@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Permissions;
 using System.Text;
 using System.Windows.Input;
+using MVVVM_Counter.Service;
 
 namespace MVVVM_Counter
 {
@@ -15,13 +16,17 @@ namespace MVVVM_Counter
     internal class CounterViewModel: INotifyPropertyChanged
     {
         private readonly CounterModel _model;
+        private readonly JsonCounterStorage _storage;
         private readonly SimpleCommand _incrmentCommand;
         private readonly SimpleCommand _decrmentCommand;
 
 
         public CounterViewModel()
         {
-            _model = new CounterModel();
+            _storage = new JsonCounterStorage();
+            int initialValue = _storage.Load();
+            _model = new CounterModel(initialValue);
+            
             _incrmentCommand = new SimpleCommand(_ => ExecuteIncrement());
             _decrmentCommand = new SimpleCommand(_ => ExecuteDecrement(), _=>_model.CanDecrement());
         }
@@ -35,6 +40,7 @@ namespace MVVVM_Counter
         {
             _model.Increment();
             OnPropertyChanged(nameof(Count));
+            _storage.Save(_model.Value);
 
         }
         
@@ -42,6 +48,7 @@ namespace MVVVM_Counter
         {
             _model.Decrement();
             OnPropertyChanged(nameof(Count));
+            _storage.Save(_model.Value);
         }
 
 
