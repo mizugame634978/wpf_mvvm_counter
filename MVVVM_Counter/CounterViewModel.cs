@@ -8,6 +8,10 @@ using System.Windows.Input;
 
 namespace MVVVM_Counter
 {
+    /// <summary>
+    /// - INotifyPropertyChangedでPropertyChangedが定義されている。
+    /// - このファイルでWPFが自動実行するのは**PropertyChangedイベントの発火を受け取ることだけ
+    /// </summary>
     internal class CounterViewModel: INotifyPropertyChanged
     {
         private readonly CounterModel _model;
@@ -48,7 +52,9 @@ namespace MVVVM_Counter
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             if(propertyName == nameof(Count))
             {
-                _decrmentCommand.RaiseCanExecuteChanged(); 
+                // Countが変わったとき、DecrementCommandのCanExecuteも再評価させる
+                // これによりWPFが「-」ボタンの有効/無効を更新する
+                _decrmentCommand.RaiseCanExecuteChanged();
             }
         }
     }

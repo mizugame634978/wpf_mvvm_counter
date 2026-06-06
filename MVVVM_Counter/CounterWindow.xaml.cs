@@ -20,6 +20,8 @@ namespace MVVVM_Counter
         public Window1()
         {
             InitializeComponent();
+            // DataContextにViewModelをセットすることで、
+            // XAMLのBindingがCounterViewModelのプロパティ・コマンドを参照できるようになる
             DataContext = new CounterViewModel();
         }
     }

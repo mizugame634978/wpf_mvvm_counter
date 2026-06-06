@@ -6,6 +6,7 @@ namespace MVVVM_Counter
 {
     internal class CounterModel
     {
+        // private set: クラス外からは読み取り専用。値の変更はIncrement/Decrementのみで行う
         public int Value { get; private set; }
 
         public void Increment()
