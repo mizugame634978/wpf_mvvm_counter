@@ -26,6 +26,7 @@ namespace MVVVM_Counter
             var model = new CounterModel();
             
             // ViewModelを作成(依存性注入)
+            // 同一のmodelインスタンスを渡すことで、カウンターの変化が両Viewに伝わる
             var counterViewModel = new CounterViewModel(model, storage);
             var evenOddViewModel = new EvenOddViewModel(model);
             

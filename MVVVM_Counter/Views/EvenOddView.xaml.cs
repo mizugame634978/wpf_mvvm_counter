@@ -15,6 +15,7 @@ public partial class EvenOddView : UserControl
     
     public void SetViewModel(EvenOddViewModel viewModel)
     {
+        // DataContextをセットするとXAMLのBindingがこのViewModelを参照する
         DataContext = viewModel;
     }
 }

@@ -12,6 +12,7 @@ public partial class CounterView : UserControl
 
     public void SetViewModel(CounterViewModel viewModel)
     {
+        // DataContextをセットするとXAMLのBindingがこのViewModelを参照する
         DataContext = viewModel;
     }
 }
