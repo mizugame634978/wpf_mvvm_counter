@@ -10,19 +10,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MVVVM_Counter
+namespace MVVVM_Counter.Views
 {
     /// <summary>
     /// Window1.xaml の相互作用ロジック
     /// </summary>
-    public partial class Window1 : Window
+    public partial class MainWindow : Window
     {
-        public Window1()
+        public MainWindow()
         {
             InitializeComponent();
-            // DataContextにViewModelをセットすることで、
-            // XAMLのBindingがCounterViewModelのプロパティ・コマンドを参照できるようになる
-            DataContext = new CounterViewModel();
         }
     }
 }
