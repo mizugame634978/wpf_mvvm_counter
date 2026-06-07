@@ -5,15 +5,16 @@ using System.Runtime.CompilerServices;
 using System.Security.Permissions;
 using System.Text;
 using System.Windows.Input;
+using MVVVM_Counter.Models;
 using MVVVM_Counter.Service;
 
-namespace MVVVM_Counter
+namespace MVVVM_Counter.ViewModels
 {
     /// <summary>
     /// - INotifyPropertyChangedでPropertyChangedが定義されている。
     /// - このファイルでWPFが自動実行するのは**PropertyChangedイベントの発火を受け取ることだけ
     /// </summary>
-    internal class CounterViewModel: INotifyPropertyChanged
+    public class CounterViewModel: INotifyPropertyChanged
     {
         private readonly CounterModel _model;
         private readonly JsonCounterStorage _storage;
@@ -21,11 +22,17 @@ namespace MVVVM_Counter
         private readonly SimpleCommand _decrmentCommand;
 
 
-        public CounterViewModel()
+        public CounterViewModel(CounterModel model, JsonCounterStorage storage)
         {
-            _storage = new JsonCounterStorage();
+            _model = model;
+            _storage = storage;
             int initialValue = _storage.Load();
-            _model = new CounterModel(initialValue);
+            // 購読前にSetValueを呼ぶため通知は誰にも届かないが、
+            // CountはModelを直接参照する計算プロパティなので初回描画時に正しい値が表示される
+            _model.SetValue(initialValue);
+
+            // モデルの変更を購読
+            _model.ValueChanged += OnCountChanged;
             
             _incrmentCommand = new SimpleCommand(_ => ExecuteIncrement());
             _decrmentCommand = new SimpleCommand(_ => ExecuteDecrement(), _=>_model.CanDecrement());
@@ -39,7 +46,6 @@ namespace MVVVM_Counter
         private void ExecuteIncrement() 
         {
             _model.Increment();
-            OnPropertyChanged(nameof(Count));
             _storage.Save(_model.Value);
 
         }
@@ -47,8 +53,13 @@ namespace MVVVM_Counter
         private void ExecuteDecrement()
         {
             _model.Decrement();
-            OnPropertyChanged(nameof(Count));
             _storage.Save(_model.Value);
+        }
+
+        // Modelの変更通知を受け取る
+        private void OnCountChanged()
+        {
+            OnPropertyChanged(nameof(Count));
         }
 
 

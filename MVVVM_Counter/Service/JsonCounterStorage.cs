@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
 using System.IO;
-using System.Text.Json;
 
 
 namespace MVVVM_Counter.Service;
