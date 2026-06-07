@@ -30,10 +30,14 @@ namespace MVVVM_Counter
             var counterViewModel = new CounterViewModel(model, storage);
             var evenOddViewModel = new EvenOddViewModel(model);
             
-            // MainWindowを作成し、ViewModelを設定(依存性注入)
-            var mainWindow = new MainWindow();
-            mainWindow.CounterView.SetViewModel(counterViewModel);
-            mainWindow.EvenOddView.SetViewModel(evenOddViewModel);
+            // 階層構造を構築
+            var mainViewModel = new MainViewModel(counterViewModel, evenOddViewModel);
+            
+            // Main
+            var mainWindow = new MainWindow
+            {
+                DataContext = mainViewModel
+            };
             
             //ウィンドウ表示
             mainWindow.Show();
