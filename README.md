@@ -35,3 +35,15 @@ graph TD
     CounterViewModel.cs -->|保存・読み込み| JsonCounterStorage.cs
     JsonCounterStorage.cs -->|読み書き| counter.json
 ```
+
+# DI(依存性注入)について
+- 依存性（クラスからnewした動くために必要なオブジェクト）を、外部から渡した
+- 背景
+  - 今までは、CounterViewModelでnewしていたクラスを、同じデータをEvenOddViewModelでも使いたくなった
+  - そのまま２つのVMでnewするだけでは、値を共有できない
+- 解決策
+  - App.xaml.csでnewしたクラスを、２つのVMに渡す
+  - こうすることで、それぞれのVMが同じクラスを見ているので、データを共有できる
+- 言葉の説明
+  - ２つのVMは、それぞれCounterModelがないと動かない（依存している）
+  - その依存しているクラスを、外部(App.xaml.cs)から渡している（注入している）
