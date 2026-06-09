@@ -15,6 +15,10 @@ namespace MVVVM_Counter.Models
         
         // private set: クラス外からは読み取り専用。値の変更はIncrement/Decrementのみで行う
         public int Value { get; private set; }
+
+        // Observerパターン: 複数のViewModelが同一のModelインスタンスを購読できる
+        // CounterViewModelとEvenOddViewModelが同じModelを共有することで、
+        // カウンターの変化が両方のViewに自動的に伝わる
         public event Action? ValueChanged;
 
         private void Notify() => ValueChanged?.Invoke();

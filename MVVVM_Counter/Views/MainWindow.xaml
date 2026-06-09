@@ -7,6 +7,10 @@
         xmlns:views="clr-namespace:MVVVM_Counter.Views"
         mc:Ignorable="d"
         Title="CounterWindow" Height="450" Width="800">
-        <!-- コンテンツコントロールでDataContextをそのまま表示 -->
+        <!--
+            {Binding} はパスなしでDataContext全体をバインドする書き方
+            DataContextにはMainViewModelが設定されており、App.xamlのDataTemplateにより
+            MainViewModelの型に対応するMainViewが自動的に表示される
+        -->
         <ContentControl Content="{Binding}"/>
 </Window>

@@ -5,15 +5,19 @@
              xmlns:vm="clr-namespace:MVVVM_Counter.ViewModels"
              xmlns:views="clr-namespace:MVVVM_Counter.Views">
     <Application.Resources>
-        
+        <!--
+            DataTemplate: ViewModelの「型」を見て、対応するViewを自動生成するルールを定義する
+            ContentControlにViewModelをバインドすると、WPFがここを検索してViewを表示する
+            これによりViewModelはViewの存在を知らなくて済む（疎結合）
+        -->
         <DataTemplate DataType="{x:Type vm:MainViewModel}">
              <views:MainView/>
          </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:CounterViewModel}">
             <views:CounterView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type vm:EvenOddViewModel}">
             <views:EvenOddView/>
         </DataTemplate>

@@ -4,6 +4,11 @@ using MVVVM_Counter.Models;
 
 namespace MVVVM_Counter.ViewModels;
 
+/// <summary>
+/// カウンターの偶数/奇数を表示する読み取り専用ViewModel
+/// カウンターの増減操作はCounterViewModelに委譲しており、このVMはICommandを持たない
+/// CounterModelのValueChangedを購読することで、カウンター変化を受動的に反映する
+/// </summary>
 public class EvenOddViewModel : INotifyPropertyChanged
 {
     private readonly CounterModel _model;

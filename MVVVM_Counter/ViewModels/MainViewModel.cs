@@ -3,6 +3,11 @@ using MVVVM_Counter.Service;
 
 namespace MVVVM_Counter.ViewModels;
 
+/// <summary>
+/// 複数のViewModelをまとめるコンテナViewModel
+/// MainView.xamlのContentControlが「CounterViewModel」「EvenOddViewModel」プロパティを
+/// バインドし、App.xamlのDataTemplateで各Viewに自動変換される
+/// </summary>
 public class MainViewModel
 {
     public CounterViewModel CounterViewModel { get; }
