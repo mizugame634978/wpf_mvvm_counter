@@ -5,35 +5,40 @@ https://prota-p.com/csharp_wpf9_mvvm1/ を行った
 ```mermaid
 graph TD
     subgraph View
-        App.xaml.cs
-        MainWindow.xaml
-        CounterView.xaml
-        EvenOddView.xaml
+        AppXaml["App.xaml (DataTemplate定義)"]
+        AppXamlCs["App.xaml.cs (コンポジションルート)"]
+        MainWindowXaml["MainWindow.xaml"]
+        MainViewXaml["MainView.xaml"]
+        CounterViewXaml["CounterView.xaml"]
+        EvenOddViewXaml["EvenOddView.xaml"]
     end
     subgraph ViewModel
-        CounterViewModel.cs
-        EvenOddViewModel.cs
-        SimpleCommand.cs
+        MainViewModelCs["MainViewModel.cs"]
+        CounterViewModelCs["CounterViewModel.cs"]
+        EvenOddViewModelCs["EvenOddViewModel.cs"]
+        SimpleCommandCs["SimpleCommand.cs"]
     end
     subgraph Model
-        CounterModel.cs
+        CounterModelCs["CounterModel.cs"]
     end
     subgraph Service
-        JsonCounterStorage.cs
+        JsonStorageCs["JsonCounterStorage.cs"]
     end
 
-    App.xaml.cs -->|DI: 生成・注入| CounterViewModel.cs
-    App.xaml.cs -->|DI: 生成・注入| EvenOddViewModel.cs
-    App.xaml.cs -->|生成| MainWindow.xaml
-    MainWindow.xaml -->|含む| CounterView.xaml
-    MainWindow.xaml -->|含む| EvenOddView.xaml
-    CounterView.xaml -->|DataContext| CounterViewModel.cs
-    EvenOddView.xaml -->|DataContext| EvenOddViewModel.cs
-    CounterViewModel.cs -->|使用| SimpleCommand.cs
-    CounterViewModel.cs -->|呼び出し| CounterModel.cs
-    EvenOddViewModel.cs -->|ValueChanged購読| CounterModel.cs
-    CounterViewModel.cs -->|保存・読み込み| JsonCounterStorage.cs
-    JsonCounterStorage.cs -->|読み書き| counter.json
+    AppXamlCs -->|DI: 生成・注入| MainViewModelCs
+    AppXamlCs -->|DataContext設定| MainWindowXaml
+    AppXaml -.->|DataTemplate提供| MainWindowXaml
+    AppXaml -.->|DataTemplate提供| MainViewXaml
+    MainWindowXaml -->|ContentControl| MainViewXaml
+    MainViewXaml -->|ContentControl| CounterViewXaml
+    MainViewXaml -->|ContentControl| EvenOddViewXaml
+    MainViewModelCs -->|プロパティ保持| CounterViewModelCs
+    MainViewModelCs -->|プロパティ保持| EvenOddViewModelCs
+    CounterViewModelCs -->|使用| SimpleCommandCs
+    CounterViewModelCs -->|呼び出し| CounterModelCs
+    EvenOddViewModelCs -->|ValueChanged購読| CounterModelCs
+    CounterViewModelCs -->|保存・読み込み| JsonStorageCs
+    JsonStorageCs -->|読み書き| counter.json
 ```
 
 # DI(依存性注入)について

@@ -7,12 +7,10 @@
         xmlns:views="clr-namespace:MVVVM_Counter.Views"
         mc:Ignorable="d"
         Title="CounterWindow" Height="450" Width="800">
-    <StackPanel Margin="20" VerticalAlignment="Center">
-        <!-- カウンター表示-->
-        <views:CounterView x:Name="CounterView" Margin="0,0,0,20"/>
-        
-        <Separator Margin="20,0" Background="LightGray" Height="1"/>
-        
-        <views:EvenOddView x:Name="EvenOddView" Margin="0,20,0,0"/>
-    </StackPanel>
+        <!--
+            {Binding} はパスなしでDataContext全体をバインドする書き方
+            DataContextにはMainViewModelが設定されており、App.xamlのDataTemplateにより
+            MainViewModelの型に対応するMainViewが自動的に表示される
+        -->
+        <ContentControl Content="{Binding}"/>
 </Window>

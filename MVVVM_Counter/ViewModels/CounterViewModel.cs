@@ -65,6 +65,9 @@ namespace MVVVM_Counter.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        // [CallerMemberName]: 呼び出し元のメソッド/プロパティ名をコンパイル時に自動で引数に埋め込む
+        // OnPropertyChanged(nameof(Count)) と書かなくても、プロパティのgetterから呼ぶだけで
+        // プロパティ名が自動設定される
         protected void OnPropertyChanged([CallerMemberName]string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
